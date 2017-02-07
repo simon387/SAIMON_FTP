@@ -25,7 +25,7 @@ Func globalVar()
 	Global Const $sFileIni		= $sDirIni & '\config.ini'
 	Global Const $sCheckpath   = iniReadW('checkPath', 'W:\CELIA\')
 	Global Const $sFullININame	= iniReadW('updatePath', $sCheckpath & '\check.txt')
-	Global Const $sdFTPaddress	= '10.210.32.202'
+	Global Const $sdFTPaddress	= '127.0.0.1'
 	Global Const $aString		= ["~ Preview module activated, 8.5, 0, 0, 'Courier New'", "~ Preview module deactivated"]
 	Global Const $cGiallino    = 0xFFFED8
 	Global Const $COLOR_RED    = 0xFF0000
@@ -208,10 +208,10 @@ Func btnAddMemberClicked()
 	Return
 
 	Local $array = readList(0, $adv_listBox_host)
-	;se esiste gi‡ non fare inserire
+	;se esiste gi√† non fare inserire
 	_SQLite_Query($hDB, 'SELECT * FROM FAVMEMBER WHERE path="' & $array[1] & '"', $hQuery)
 	If _SQLite_FetchData($hQuery, $aRow) = $SQLITE_OK Then
-		MsgBox(48, 'Attenzione', 'Dataset gi‡ associato!', "", $form_main)
+		MsgBox(48, 'Attenzione', 'Dataset gi√† associato!', "", $form_main)
 	Else
 		Local $local_file = FileOpenDialog("Associa a file locale", @HomePath, "All (*.*)", 10, "", $form_main)
 		If $local_file <> '' Then
@@ -450,7 +450,7 @@ Func clickHost()
 			GUICtrlSetState($adv_btn_dw, 64)
 			GUICtrlSetState($adv_btn_np, 64)
 			GUICtrlSetState($adv_btn_ex, 64)
-			; se NON esiste readList(2, £adv_listBox_Host) --> cambialo
+			; se NON esiste readList(2, ¬£adv_listBox_Host) --> cambialo
 			Return
 		EndIf
 	ElseIf _GUICtrlListView_GetSelectedCount($adv_listBox_Host) > 1 Then
@@ -722,7 +722,7 @@ EndFunc
 Func menuAboutClicked()
 	_DebugOut('menuAboutClicked')
 	MsgBox(64, 'About', $sTitle & ' - 100% free software' & @CRLF & @CRLF & _
-	'Programma creato per interfacciarsi al meglio con protocollo FTP tra sistemi operativi Windows© e Host Z-OS© Mainframe.' & _
+	'Programma creato per interfacciarsi al meglio con protocollo FTP tra sistemi operativi Windows¬© e Host Z-OS¬© Mainframe.' & _
 	@CRLF & @CRLF & 'Created by simon387@hotmail.it' & @CRLF & 'Testers and ideas: Romilda, Medico Alessandri, PRFIGB1', 60, $form_main)
 EndFunc
 
@@ -1130,7 +1130,7 @@ Func ftp($verb, $sLF, $sRF, $form = $form_main)
 				Else
 					_DebugOut('!! upload by FTP.exe, LRECL of local file=' & iniReadW('lRECL', 'auto'))
 					If $iLRECL > iniReadW('lRECL', $iLRECL) Then
-						$ok = errore('FTP annullato - il file da caricare contiene pi˘ dati del RECL specificato')
+						$ok = errore('FTP annullato - il file da caricare contiene pi√π dati del RECL specificato')
 					Else
 						$iLRECL = iniReadW('lRECL', $iLRECL)
 						Local $hFile = _TempFile(@TempDir, '', ''), $sTmp = $sUser & @CRLF & $sPass & @CRLF & 'cd ..' & @CRLF & 'delete ' & $sRF & @CRLF & 'literal site lrecl=' & $iLRECL & @CRLF & 'literal site RECFM=' & iniReadW('rECFM', 'FB') & @CRLF & 'put "' & $sLFTmp & '" "' & $sRF & '"' & @CRLF & 'quit'
